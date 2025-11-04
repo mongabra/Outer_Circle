@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>OuterCircle</title>
+  <link rel="stylesheet" href="styles/styles.css">
+</head>
+<body>
+  <div class="wrap">
+    <main class="card" role="main" aria-labelledby="heading">
+      <header class="card-header">
+        <div class="logo" aria-hidden="true">OC</div>
+        <div class="title">
+          <h1 id="heading">OuterCircle</h1>
+          <p>There is light in all of us, and that is what guides us and gives us hope.</p>
+        </div>
+      </header>
+
+      <form id="anonForm" autocomplete="off" novalidate>
+        <div>
+          <h3>Why We Exist</h3>
+          <p>Finding Your Confident Voice</p>
+          <p>We believe that healing begins with a single word.
+             For too long, the stigma around mental health has forced people into the shadows. </p> 
+          <p>We want to challenge that. We want to give you the platform to share your darkest thoughts or your smallest victories without the worry of exposure.</p>   
+        </div>
+
+        <div>
+          <label for="message">Message</label>
+          <textarea id="message" name="message" placeholder="Type your anonymous message here..." required maxlength="2000" aria-required="true"></textarea>
+          <div class="small">Message length: <span id="chars">0</span>/10000</div>
+        </div>
+
+        <div class="row">
+          <div style="flex:1">
+            <label for="sensitivity">Sensitivity</label>
+            <select id="sensitivity" name="sensitivity" aria-label="Message sensitivity level">
+              <option value="normal" selected>Normal</option>
+              <option value="sensitive">Sensitive</option>
+              <option value="urgent">Urgent</option>
+            </select>
+          </div>
+
+          <div style="width:180px;">
+            <label for="delivery">Deliver to</label>
+            <select id="delivery" name="delivery" aria-label="Message delivery target">
+              <option value="team">Team Inbox</option>
+              <option value="moderators">Moderators</option>
+              <option value="feedback">Feedback Box</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="controls" style="margin-top:12px;">
+          <div class="left-note small">No account, no name — truly anonymous.</div>
+          <div style="display:flex;gap:8px;">
+            <button id="sendBtn" type="submit" aria-live="polite">
+              <span id="btnLabel">Send anonymously</span>
+              <span id="btnSpinner" style="display:none" class="spinner" aria-hidden="true"></span>
+            </button>
+            <button id="clearBtn" type="button" class="secondary">Clear</button>
+          </div>
+        </div>
+
+        <div class="feedback" role="status" aria-live="polite">
+          <span id="feedbackText" class="small"></span>
+        </div>
+
+        <footer>
+          <p>&copy; 2025. OuterCircle. All Rights Reserved.</p>
+        </footer>
+      </form>
+    </main>
+  </div>
+
+  <script src="scripts/script.js"></script>
+</body>
+</html>
