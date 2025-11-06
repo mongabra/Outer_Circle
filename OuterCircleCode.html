@@ -357,7 +357,7 @@
       </div>
 
       <!-- Server-injected unique code (replace UNIQUE_CODE_HERE with server value) -->
-      <form autocomplete="off" method="post" action="/your-backend-endpoint" id="anonForm">
+      <form autocomplete="off" method="post" action="/submit-message" id="anonForm">
         <div class="form-group">
           <label for="user-code">Your Unique Code</label>
           <div class="ucode-row">
@@ -371,7 +371,7 @@
               class="readonly"
               placeholder="Your unique code"
               autocomplete="off"
-              value="UNIQUE_CODE_HERE"
+              value="{{ code }}"
             />
           </div>
           <div class="note">
