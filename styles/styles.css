@@ -22,6 +22,47 @@ html,body{
   -moz-osx-font-smoothing:grayscale;
 }
 
+/* === Background watermark integration === */
+body {
+  /* Existing background gradient preserved */
+  background: linear-gradient(to right, #e0f7fa, #f5ffff);
+  position: relative;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Watermark image inside the main white card */
+.wrap {
+    min-height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 48px 20px;
+    position: relative;
+    background-color: rgba(255, 255, 255, 0.95); /* subtle white overlay */
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+}
+
+/* The image background inside the white card */
+.wrap::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: url("../images/OuterCircle.png") center/cover no-repeat;
+    opacity: 1; /* adjust 0.3–0.5 for more/less visibility */
+    filter: blur(3px); /* keeps the image soft */
+    z-index: 0;
+}
+
+/* Keep card content above the image */
+.wrap > * {
+    position: relative;
+    z-index: 1;
+}
+
+
 .wrap{
   min-height:100%;
   display:flex;
