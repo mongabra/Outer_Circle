@@ -1,10 +1,13 @@
 const BACKEND_URL = '/api/anonymous-message';
+const BACKEND_URL = '/submit-message';
 
 const form = document.getElementById('anonForm');
 const messageEl = document.getElementById('message');
 const topicEl = document.getElementById('topic');
+const userCodeEl = document.getElementById('user-code');
 const sendBtn = document.getElementById('sendBtn');
 const btnLabel = document.getElementById('btnLabel');
+const btnLabel = sendBtn.querySelector('span:first-child');
 const btnSpinner = document.getElementById('btnSpinner');
 const feedbackText = document.getElementById('feedbackText');
 const clearBtn = document.getElementById('clearBtn');
@@ -38,6 +41,8 @@ form.addEventListener('submit', async (ev) => {
   const payload = {
     topic: topicEl ? (topicEl.value || '').trim() : '',
     message: message,
+    'user-code': userCodeEl.value,
+    'anon-message': message,
     sensitivity: document.getElementById('sensitivity').value,
     delivery: document.getElementById('delivery').value,
     timestamp_utc: new Date().toISOString()
@@ -52,6 +57,7 @@ form.addEventListener('submit', async (ev) => {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload),
+      body: new FormData(form),
       credentials: 'omit'
     });
 
@@ -68,6 +74,10 @@ form.addEventListener('submit', async (ev) => {
     if (data && data.ok === false) throw new Error(data.error || 'Server rejected the message.');
 
     feedbackText.innerHTML = '<span class="ok">Message sent anonymously. Thank you.</span>';
+    // On success, the backend redirects, so we can redirect the user too.
+    if (res.redirected) {
+        window.location.href = res.url;
+    }
     messageEl.value = '';
     chars.textContent = 0;
 

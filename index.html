@@ -17,7 +17,7 @@
         </div>
       </header>
 
-      <form id="anonForm" autocomplete="off" novalidate>
+      <form id="anonForm" autocomplete="off" method="post" action="/submit-message">
         <div>
           <h3>Why We Exist?</h3>
           <h4>Finding Your Confident Voice</h4>
@@ -27,6 +27,25 @@
              We want to challenge that. We want to give you the platform to share your darkest thoughts or your smallest victories without the worry of exposure.</p>   
         </div>
         <div>
+          <label for="user-code">Your Unique Code</label>
+          <div class="row">
+            <input
+              type="text"
+              id="user-code"
+              name="user-code"
+              maxlength="4"
+              required
+              readonly
+              class="readonly"
+              placeholder="Your unique code"
+              autocomplete="off"
+              value="{{ code }}"
+            />
+          </div>
+          <div class="small" style="margin-top: 4px;">This code links your anonymous messages. Keep it safe. <strong>Do not share it.</strong></div>
+        </div>
+
+        <div style="margin-top: 12px;">
           <label for="message">Message</label>
           <textarea id="message" name="message" placeholder="Type your anonymous message here..." required maxlength="2000" aria-required="true"></textarea>
           <div class="small">Message length: <span id="chars">0</span>/10000</div>
