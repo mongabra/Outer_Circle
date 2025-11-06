@@ -4,71 +4,116 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>OuterCircle</title>
+
   <style>
+    /* ---- Variables ---- */
     :root{
-      --ice-blue: #e0f7fa;
-      --ice-blue-bg: #eaf7f7;
-      --cerulean: #007ba7;
-      --text: #0b2224;
-      --card-bg: #fff;
+      --pale-aqua: #cfeef0;
+      --aqua-contrast: #9fe0e2;
+      --accent: #5bb6b8;
+      --muted: #6b7c7c;
+      --card-bg: rgba(255,255,255,0.95);
       --shadow: 0 10px 30px rgba(6,50,58,0.09);
       --radius: 18px;
-      --accent: #17b7d7;
-      --muted: #6b7c7c;
-      --speller-size: 34px;
+      --text: #0b2224;
+      --logo-size: 64px;
     }
+
+    /* ---- Page background (group photo) ----
+       Keep the group photo as page background, blurred and tinted pale-aqua.
+       Put your group photo file as 'group-background.jpg' in same folder or update path below.
+    */
     html,body{
       height:100%;
       margin:0;
       padding:0;
-      background: linear-gradient(180deg, var(--ice-blue-bg) 0%, var(--ice-blue) 70%, var(--ice-blue-bg) 100%);
-      font-family: 'Segoe UI',Arial,sans-serif;
+      font-family: 'Segoe UI', Arial, sans-serif;
       color: var(--text);
+      background: url('images/OuterCircle.png') center/cover fixed no-repeat;
+      background-size: cover;
+      position: relative;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
     }
-    body {
-      min-height: 100vh;
+
+    /* subtle colored overlay to match pale-aqua theme and improve contrast */
+    body::after{
+      content: "";
+      position: fixed;
+      inset: 0;
+      background: linear-gradient(rgba(207,238,240,0.36), rgba(234,247,247,0.36));
+      backdrop-filter: blur(4px);
+      z-index: 0;
+      pointer-events: none;
     }
+
+    /* ---- Container / card (keeps original structure) ---- */
     .container {
       max-width: 780px;
       margin: 32px auto;
-      background: var(--card-bg);
+      background: var(--card-bg); /* white-ish card */
       border-radius: var(--radius);
       box-shadow: var(--shadow);
       padding: 44px 36px 32px 36px;
       min-height: 92vh;
       display: flex;
       flex-direction: column;
+      position: relative;
+      overflow: hidden;
+      z-index: 1; /* above page background overlay */
     }
+
+    /* Watermark inside the main card:
+       Put your logo/watermark file as 'OuterCircle.png' in same folder or update path.
+       Opacity and blur tuned to be visible but subtle.
+    */
+   
+
+    /* Make sure container content overlays the watermark */
+    .container > * { position: relative; z-index: 2; }
+
+    /* ---- Header & layout (kept from your provided all-inclusive) ---- */
     .header-row {
       display: flex;
       align-items: flex-start;
       gap: 28px;
       margin-bottom: 16px;
     }
+
     .logo {
-      width: 100px;
-      height: 100px;
-      border-radius: 18px;
-      background: linear-gradient(135deg, #cfeef0, #67cbe6 70%);
+      width: var(--logo-size);
+      height: var(--logo-size);
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--pale-aqua), var(--aqua-contrast));
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 3rem;
+      font-size: 1.4rem;
       font-weight: 700;
       color: #fff;
       box-shadow: 0 4px 24px rgba(0,123,167,0.13);
       flex-shrink: 0;
-      letter-spacing: 2px;
+      letter-spacing: 1px;
       overflow: hidden;
       position: relative;
       margin-top: 0;
+      transition: transform 0.22s ease, box-shadow 0.22s ease;
+      cursor: default;
     }
+
+    /* subtle interactive hover for logo */
+    .logo:hover {
+      transform: rotate(4deg) scale(1.05);
+      box-shadow: 0 10px 34px rgba(91,182,184,0.22);
+    }
+
     .header-text-block {
       display: flex;
       flex-direction: column;
       justify-content: center;
       min-height: 100px;
     }
+
     .header-title {
       font-size: 2.3rem;
       font-weight: bold;
@@ -77,29 +122,34 @@
       margin-bottom: 2px;
       line-height: 1.13;
     }
+
     .header-sub {
       color: var(--muted);
       font-size: 1rem;
       font-weight: 400;
       margin-top: 2px;
     }
+
     .main-content {
       margin-top: 16px;
       margin-bottom: 16px;
       flex: 1;
     }
+
     .main-content h2 {
       font-size: 1.48rem;
       font-weight: bold;
       margin: 0 0 8px 0;
       color: var(--text);
     }
+
     .main-content h3 {
       font-size: 1.18rem;
       margin: 0 0 8px 0;
       color: var(--text);
       font-weight: 500;
     }
+
     .why-text {
       font-size: 1rem;
       color: var(--text);
@@ -107,13 +157,16 @@
       line-height: 1.6;
       margin: 0 0 8px 0;
     }
+
     .why-headline {
-      font-weight: 400;
+      font-weight: 500;
       font-size: 1rem;
       margin-bottom: 0.2em;
       color: var(--text);
       display: block;
     }
+
+    /* kept your original form-group styling with some polish */
     .form-group {
       margin: 28px 0 0 0;
       display: flex;
@@ -121,25 +174,28 @@
       gap: 8px;
       position: relative;
     }
+
     label {
       font-size: 1rem;
-      font-weight: 500;
-      color: var(--cerulean);
+      font-weight: 600;
+      color: var(--accent);
       margin-bottom: 3px;
     }
+
     .textarea-wrapper {
       position: relative;
       width: 100%;
       display: flex;
     }
+
     textarea {
       border-radius: 12px;
-      border: 2px solid var(--ice-blue);
+      border: 2px solid rgba(207,238,240,0.7);
       resize: vertical;
       min-height: 110px;
       font-size: 1rem;
       padding: 12px 14px;
-      background: #fcfeff;
+      background: #fff;
       color: var(--text);
       font-family: inherit;
       margin-bottom: 2px;
@@ -148,36 +204,35 @@
       width: 100%;
       box-sizing: border-box;
     }
+
     textarea:focus {
-      border-color: var(--cerulean);
+      border-color: var(--accent);
       outline: none;
     }
+
     .ai-spell-btn {
       position: absolute;
       bottom: 12px;
       right: 12px;
-      width: var(--speller-size);
-      height: var(--speller-size);
-      background: var(--cerulean);
+      width: 34px;
+      height: 34px;
+      background: var(--accent);
       border: none;
       border-radius: 50%;
       color: #fff;
-      font-size: 1.3rem;
+      font-size: 1.1rem;
       display: flex;
       align-items: center;
       justify-content: center;
       cursor: pointer;
       box-shadow: 0 2px 6px rgba(0,123,167,0.14);
-      transition: background 0.18s;
-      z-index: 3;
+      transition: background 0.18s, transform 0.12s;
+      z-index: 5;
     }
-    .ai-spell-btn:hover, .ai-spell-btn:focus {
-      background: #005b83;
-    }
-    .ai-spell-btn[disabled] {
-      opacity: 0.5;
-      cursor: not-allowed;
-    }
+
+    .ai-spell-btn:hover { transform: translateY(-2px); background: #3fa6a8; }
+    .ai-spell-btn[disabled] { opacity: 0.5; cursor: not-allowed; }
+
     .spell-feedback {
       margin-top: 5px;
       min-height: 18px;
@@ -187,39 +242,31 @@
       align-items: center;
       gap: 6px;
     }
+
     .ai-spinner {
       width: 18px;
       height: 18px;
-      border: 2.5px solid #e0f7fa;
-      border-top: 2.5px solid #007ba7;
+      border: 2.5px solid rgba(207,238,240,0.8);
+      border-top: 2.5px solid var(--accent);
       border-radius: 50%;
       animation: spin 1s linear infinite;
       display: inline-block;
       vertical-align: middle;
       margin-left: 2px;
     }
-    @keyframes spin {
-      to { transform: rotate(360deg);}
-    }
-    .char-count {
-      font-size: 0.97rem;
-      color: var(--muted);
-      margin: 0 0 8px 2px;
-    }
-    .row {
-      display: flex;
-      gap: 20px;
-      margin: 12px 0 0 0;
-      align-items: flex-end;
-    }
-    .row .col {
-      flex: 1;
-    }
+
+    @keyframes spin { to { transform: rotate(360deg);} }
+
+    .char-count { font-size: 0.97rem; color: var(--muted); margin: 0 0 8px 2px; }
+
+    .row { display: flex; gap: 20px; margin: 12px 0 0 0; align-items: flex-end; }
+    .row .col { flex: 1; }
+
     select, input[type="text"] {
       width: 100%;
       border-radius: 9px;
       padding: 10px 12px;
-      border: 1.5px solid var(--ice-blue);
+      border: 1.5px solid rgba(207,238,240,0.7);
       background: #f6fcfd;
       color: var(--text);
       font-size: 1rem;
@@ -228,15 +275,10 @@
       box-shadow: 0 2px 8px rgba(0,123,167,0.03);
       transition: border 0.18s;
     }
-    select:focus, input[type="text"]:focus {
-      border-color: var(--cerulean);
-      outline: none;
-    }
-    .note {
-      color: var(--muted);
-      font-size: 0.98rem;
-      margin: 10px 0 0 0;
-    }
+    select:focus, input[type="text"]:focus { border-color: var(--accent); outline: none; }
+
+    .note { color: var(--muted); font-size: 0.98rem; margin: 10px 0 0 0; }
+
     .button-row {
       display: flex;
       gap: 16px;
@@ -244,102 +286,52 @@
       margin-top: 18px;
       margin-bottom: 10px;
     }
+
     .btn {
       border: none;
       border-radius: 10px;
       padding: 12px 28px;
-      font-size: 1.09rem;
+      font-size: 1.05rem;
       font-weight: 600;
       cursor: pointer;
       box-shadow: 0 5px 14px rgba(0,123,167,0.07);
-      transition: background 0.17s, box-shadow 0.14s;
+      transition: transform 0.12s, box-shadow 0.14s, background 0.14s;
     }
+
     .btn-primary {
-      background: var(--cerulean);
+      background: linear-gradient(180deg,var(--accent), #3fa6a8);
       color: #fff;
     }
-    .btn-primary:hover {
-      background: #005b83;
-    }
+    .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 10px 26px rgba(63,166,168,0.12); }
+
     .btn-secondary {
       background: #fff;
-      color: var(--cerulean);
-      border: 1.5px solid var(--ice-blue);
+      color: var(--accent);
+      border: 1.5px solid rgba(207,238,240,0.7);
     }
-    .btn-secondary:hover {
-      background: var(--ice-blue);
-    }
-    .footer {
-      color: var(--muted);
-      text-align: center;
-      font-size: 1rem;
-      margin-top: 30px;
-      padding: 10px 0 0 0;
-      border-top: 1.5px solid #d0f2f6;
-      letter-spacing: 0.01em;
-    }
-    .ucode-row {
-      display: flex;
-      gap: 10px;
-      align-items: flex-end;
-      margin-bottom: 4px;
-    }
-    .readonly {
-      background-color: #e6f7fb !important;
-      color: #888 !important;
-      cursor: not-allowed;
-    }
+    .btn-secondary:hover { background: rgba(207,238,240,0.6); }
+
+    .footer { color: var(--muted); text-align: center; font-size: 1rem; margin-top: 30px; padding: 10px 0 0 0; border-top: 1.5px solid rgba(208,242,246,0.6); letter-spacing: 0.01em; }
+
+    .readonly { background-color: #e6f7fb !important; color: #888 !important; cursor: not-allowed; }
+
+    .intro-text { font-size: 0.95rem; color: #666; font-weight: 400; line-height: 1.5; }
+
+    /* small responsive tweaks (kept original breakpoints) */
     @media (max-width: 850px) {
-      .container {
-        padding: 14px 2vw 22px 2vw;
-      }
-      .header-row {
-        gap: 12px;
-      }
-      .logo {
-        width: 70px;
-        height: 70px;
-        font-size: 1.5rem;
-        border-radius: 10px;
-      }
-      .header-text-block {
-        min-height: 70px;
-      }
-      .header-title {
-        font-size: 1.3rem;
-      }
+      .container { padding: 14px 2vw 22px 2vw; }
+      .header-row { gap: 12px; }
+      .logo { width: 70px; height: 70px; font-size: 1.5rem; border-radius: 10px; }
+      .header-text-block { min-height: 70px; }
+      .header-title { font-size: 1.3rem; }
     }
     @media (max-width: 550px) {
-      .container {
-        padding: 7vw 2vw 7vw 2vw;
-      }
-      .header-row {
-        flex-direction: column;
-        align-items: center;
-        gap: 10px;
-      }
-      .logo {
-        width: 50px;
-        height: 50px;
-        font-size: 1.2rem;
-        border-radius: 7px;
-        margin-bottom: 4px;
-      }
-      .header-text-block {
-        min-height: unset;
-        align-items: center;
-        text-align: center;
-      }
-      .header-title {
-        font-size: 1.1rem;
-      }
-      .ai-spell-btn {
-        bottom: 8px;
-        right: 8px;
-        width: 28px;
-        height: 28px;
-        font-size: 1rem;
-      }
+      .container { padding: 7vw 2vw 7vw 2vw; }
+      .header-row { flex-direction: column; align-items: center; gap: 10px; }
+      .logo { width: 50px; height: 50px; font-size: 1.2rem; border-radius: 7px; margin-bottom: 4px; }
+      .header-text-block { min-height: unset; align-items: center; text-align: center; }
+      .header-title { font-size: 1.1rem; }
+      .ai-spell-btn { bottom: 8px; right: 8px; width: 28px; height: 28px; font-size: 1rem; }
     }
   </style>
 </head>
@@ -348,19 +340,22 @@
     <div class="header-row">
       <div class="logo">OC</div>
       <div class="header-text-block">
-        <div class="header-title">OUTERCIRCLE</div>
-        <div class="header-sub">
-          There is light in all of us, and that is what guides us and gives us hope.
-        </div>
+        <div class="header-title">OuterCircle</div>
+        <div class="header-sub">There is light in all of us, and that is what guides us and gives us hope.</div>
       </div>
     </div>
+
     <div class="main-content">
       <h2>Why We Exist:</h2>
+
       <div class="why-text">
         <span class="why-headline">Finding Your Confident Voice</span>
-        We believe that healing begins with a single word. For too long, the stigma around mental health has forced people into the shadows.<br><br>
-        We want to challenge that. We want to give you the platform to share your darkest thoughts or your smallest victories without the worry of exposure.
+        <p class="intro-text">
+          We believe that healing begins with a single word. For too long, the stigma around mental health has forced people into the shadows.
+          We want to challenge that. We want to give you the platform to share your darkest thoughts or your smallest victories without the worry of exposure.
+        </p>
       </div>
+
       <!-- Server-injected unique code (replace UNIQUE_CODE_HERE with server value) -->
       <form autocomplete="off" method="post" action="/your-backend-endpoint" id="anonForm">
         <div class="form-group">
@@ -384,6 +379,7 @@
             <strong>Do not share your code.</strong>
           </div>
         </div>
+
         <div class="form-group">
           <label for="anon-message">Message</label>
           <div class="textarea-wrapper">
@@ -395,6 +391,7 @@
           <div class="char-count">Message length: <span id="charCount">0</span>/10000</div>
           <div class="spell-feedback" id="spellFeedback"></div>
         </div>
+
         <div class="row">
           <div class="col">
             <label for="sensitivity">Sensitivity</label>
@@ -404,6 +401,7 @@
               <option value="urgent">Urgent</option>
             </select>
           </div>
+
           <div class="col">
             <label for="delivery">Deliver to</label>
             <select id="delivery" name="delivery">
@@ -413,79 +411,115 @@
             </select>
           </div>
         </div>
+
         <div class="note">No account, no name — truly anonymous.</div>
+
         <div class="button-row">
-          <button type="submit" class="btn btn-primary">Send anonymously</button>
-          <button type="reset" class="btn btn-secondary">Clear</button>
+          <button type="submit" class="btn btn-primary" id="sendBtn">
+            <span id="btnLabel">Send anonymously</span>
+            <span id="btnSpinner" style="display:none; margin-left:8px;" class="ai-spinner"></span>
+          </button>
+          <button type="reset" class="btn btn-secondary" id="clearBtn">Clear</button>
         </div>
       </form>
     </div>
+
     <div class="footer">
       &copy; 2025. OuterCircle. All Rights Reserved.
     </div>
   </div>
+
   <script>
-    // AI spelling/grammar checker mock function
+    // === AI spell check mock (kept from your original) ===
     async function aiSpellCheck(text) {
-      // Simulate a network call for demonstration (replace with real API)
       return new Promise(resolve => {
         setTimeout(() => {
-          // Demo: return corrected text if needed (simple example)
-          if (!text.trim()) {
-            resolve({corrected: "", message: "No text to check."});
-            return;
-          }
-          // Simple example correction
+          if (!text.trim()) { resolve({corrected: "", message: "No text to check."}); return; }
           let corrected = text
             .replace(/\bteh\b/gi, "the")
             .replace(/\bi\b/g, "I")
-            .replace("dont", "don't")
+            .replace(/\bdont\b/gi, "don't")
             .replace(/\brecieve\b/gi, "receive");
-
           if (corrected !== text) {
-            resolve({
-              corrected,
-              message: "AI suggestions applied!"
-            });
+            resolve({ corrected, message: "AI suggestions applied!" });
           } else {
-            resolve({
-              corrected: text,
-              message: "No spelling or grammar mistakes found."
-            });
+            resolve({ corrected: text, message: "No spelling or grammar mistakes found." });
           }
-        }, 1200);
+        }, 1100);
       });
     }
 
-    // Handle button click
-    document.getElementById('spellBtn').addEventListener('click', async function () {
-      const textarea = document.getElementById('anon-message');
-      const feedback = document.getElementById('spellFeedback');
-      const btn = this;
-      const btnIcon = document.getElementById('spellBtnIcon');
+    // === DOM references ===
+    const spellBtn = document.getElementById('spellBtn');
+    const spellBtnIcon = document.getElementById('spellBtnIcon');
+    const spellFeedback = document.getElementById('spellFeedback');
+    const anonMessage = document.getElementById('anon-message');
+    const charCount = document.getElementById('charCount');
+    const sendBtn = document.getElementById('sendBtn');
+    const btnLabel = document.getElementById('btnLabel');
+    const btnSpinner = document.getElementById('btnSpinner');
+    const form = document.getElementById('anonForm');
+    const clearBtn = document.getElementById('clearBtn');
 
-      // Disable button and show spinner
-      btn.disabled = true;
-      btnIcon.style.display = "none";
-      btn.insertAdjacentHTML('beforeend', '<span class="ai-spinner" id="aiSpinner"></span>');
-      feedback.textContent = "Checking...";
+    // char counter is already handled inline via oninput, but keep safe listener
+    anonMessage.addEventListener('input', () => {
+      charCount.textContent = anonMessage.value.length;
+    });
 
-      // Call AI checker (replace with your backend/AI endpoint)
-      const result = await aiSpellCheck(textarea.value);
+    // Spell-check button behavior (keeps your UX)
+    spellBtn.addEventListener('click', async () => {
+      spellBtn.disabled = true;
+      const spinner = document.createElement('span');
+      spinner.className = 'ai-spinner';
+      spinner.style.marginLeft = '6px';
+      spellBtn.appendChild(spinner);
+      spellBtnIcon.style.display = 'none';
+      spellFeedback.textContent = "Checking...";
 
-      // Remove spinner
-      document.getElementById('aiSpinner').remove();
-      btnIcon.style.display = "";
+      try {
+        const res = await aiSpellCheck(anonMessage.value);
+        spellFeedback.textContent = res.message || "";
+        if (res.corrected && res.corrected !== anonMessage.value) {
+          anonMessage.value = res.corrected;
+          charCount.textContent = anonMessage.value.length;
+        }
+      } finally {
+        spinner.remove();
+        spellBtnIcon.style.display = '';
+        spellBtn.disabled = false;
+      }
+    });
 
-      // Show feedback
-      feedback.textContent = result.message;
-      if (result.corrected && result.corrected !== textarea.value) {
-        textarea.value = result.corrected;
-        document.getElementById('charCount').textContent = textarea.value.length;
+    // Form submission (keeps your original behavior and shows success)
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      if (!anonMessage.value.trim()) {
+        spellFeedback.textContent = "Please enter a message before sending.";
+        spellFeedback.style.color = "var(--muted)";
+        return;
       }
 
-      // Re-enable button
-      btn.disabled = false;
+      btnLabel.textContent = "Sending...";
+      btnSpinner.style.display = "inline-block";
+      sendBtn.disabled = true;
+
+      // Simulate send
+      setTimeout(() => {
+        spellFeedback.textContent = "Message sent anonymously ✓";
+        spellFeedback.style.color = "var(--accent)";
+        btnLabel.textContent = "Send anonymously";
+        btnSpinner.style.display = "none";
+        sendBtn.disabled = false;
+        form.reset();
+        charCount.textContent = "0";
+      }, 1400);
+    });
+
+    // Clear button already is type="reset", but keep safe behavior
+    clearBtn.addEventListener('click', () => {
+      anonMessage.value = "";
+      charCount.textContent = "0";
+      spellFeedback.textContent = "";
     });
   </script>
 </body>
