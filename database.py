@@ -7,7 +7,7 @@ from psycopg2.extras import DictCursor
 # Get the database connection URL from the environment variables.
 # This is crucial for services like Render where connection details are not hardcoded.
 
-DATABASE_URL = "dbname=outercircle user=postgres password=123456789 host=localhost"
+DATABASE_URL = "dbname=outercircle user=postgres password=s.c.a.lpa host=localhost"
 
 
 def get_db_connection():
@@ -21,7 +21,7 @@ def get_db_connection():
     except psycopg2.OperationalError as e:
         # This will help you debug if the DATABASE_URL is wrong or the database is down.
         print(f"Error connecting to the database: {e}")
-        raise
+        raisep
 
 def init_db():
     """
