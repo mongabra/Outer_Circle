@@ -11,3 +11,6 @@ __pycache__/
 
 # Old data files
 user_messages.json
+
+# Environment variables file (contains secrets!)
+.env
