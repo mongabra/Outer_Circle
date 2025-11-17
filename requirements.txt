@@ -3,3 +3,4 @@ waitress
 psycopg2-binary
 Flask-HTTPAuth
 gunicorn
+python-dotenv
