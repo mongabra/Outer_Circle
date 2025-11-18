@@ -30,6 +30,12 @@ def create_app():
     """Create and configure an instance of the Flask application."""
     app = Flask(__name__)
 
+    # Fail fast if the DATABASE_URL is not set.
+    database_url = os.environ.get('DATABASE_URL')
+    if not database_url:
+        raise ValueError("No DATABASE_URL set for the application. Please set the environment variable.")
+    app.config['DATABASE_URL'] = database_url
+
     # Register database functions with the app. This also handles teardown.
     db.init_app(app)
 
@@ -114,6 +120,7 @@ def create_app():
 if __name__ == '__main__':
     # This block allows you to run the app directly with `python app.py`
     # for local development.
+    from waitress import serve
     app = create_app()
-    # The waitress server is for production; for development, app.run() is great.
-    app.run(debug=True, port=5001)
+    # Use waitress to run the app. This is a production-ready server that works on Windows.
+    serve(app, host='0.0.0.0', port=5001)

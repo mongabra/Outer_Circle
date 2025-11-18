@@ -68,8 +68,6 @@ def init_app(app):
     app.teardown_appcontext(close_db)
     # Add the new 'init-db' command to the flask CLI
     app.cli.add_command(init_db_command)
-    # Pass the DATABASE_URL from the app's general config
-    app.config['DATABASE_URL'] = os.environ.get('DATABASE_URL')
 
 
 # --- Database Interaction Functions ---
