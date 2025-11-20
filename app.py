@@ -117,10 +117,9 @@ def create_app():
 
     return app
 
+# Create the app instance for Gunicorn to discover
+app = create_app()
+
 if __name__ == '__main__':
-    # This block allows you to run the app directly with `python app.py`
-    # for local development.
-    from waitress import serve
-    app = create_app()
-    # Use waitress to run the app. This is a production-ready server that works on Windows.
-    serve(app, host='0.0.0.0', port=5001)
+    # This block is for local development only
+    app.run(host='0.0.0.0', port=5001, debug=True)
